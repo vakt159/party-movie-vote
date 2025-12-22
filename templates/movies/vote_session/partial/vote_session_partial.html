@@ -1,0 +1,45 @@
+{% for vote_session in vote_sessions %}
+<tr>
+    <td>{{ vote_session.id }}</td>
+    <td>
+        <a href="{% url 'movies:vote-session-detail' pk=vote_session.id %}">
+            {{ vote_session.name }}
+        </a>
+    </td>
+    <td>{{ vote_session.event_date_time }}</td>
+    <td class="text-center">
+        {% if vote_session in active_events %}
+            ✅
+        {% else %}
+            ❌
+        {% endif %}
+    </td>
+    <td class="text-center">
+        {% if vote_session in active_events %}
+            {% if user in vote_session.members.all %}
+                <form method="post"
+                      hx-post="{% url 'movies:vote-session-delete-user' vote_session.id %}"
+                      hx-target="#search-results"
+                      hx-swap="innerHTML">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-danger">
+                        Leave
+                    </button>
+                </form>
+            {% else %}
+                <form method="post"
+                      hx-post="{% url 'movies:vote-session-join' vote_session.id %}"
+                      hx-target="#search-results"
+                      hx-swap="innerHTML">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-success">
+                        Join
+                    </button>
+                </form>
+            {% endif %}
+        {% else %}
+            <span class="text-muted fst-italic">Actions unavailable</span>
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}

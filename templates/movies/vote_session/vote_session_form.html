@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label">{{ form.members.label }}</label>
+        <div class="checkbox-grid">
+            {% for checkbox in form.members %}
+                <div class="form-check">
+                    {{ checkbox.tag }}
+                    <label class="form-check-label">{{ checkbox.choice_label }}</label>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label">{{ form.movies.label }}</label>
+        <div class="checkbox-grid">
+            {% for checkbox in form.movies %}
+                <div class="form-check">
+                    {{ checkbox.tag }}
+                    <label class="form-check-label">{{ checkbox.choice_label }}</label>
+                </div>
+            {% endfor %}
+        </div>
+        {% if form.movies.errors %}
+            <div class="text-danger small">{{ form.movies.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.event_date_time.label_tag }}
+        {{ form.event_date_time }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}

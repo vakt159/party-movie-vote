@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card text-center shadow p-4" style="max-width: 400px; width: 100%;">
+        <div class="card-body">
+            <h3 class="card-title mb-3">You have been logged out</h3>
+            <p class="card-text mb-4">Thank you for visiting! Please log in again to continue.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Login Again</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

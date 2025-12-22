@@ -1,0 +1,13 @@
+{% for movie in movie_list %}
+<tr>
+    <td>
+        <a href="{% url 'movies:movie-detail' pk=movie.id %}">
+            {{ movie.name }}
+        </a>
+    </td>
+    <td>{{ movie.director }}</td>
+    <td>{{ movie.release_year }}</td>
+    <td class="text-start">{{ movie.description }}</td>
+    <td><a href="{{ movie.imdb_url }}">IMDB link</a></td>
+</tr>
+{% endfor %}
