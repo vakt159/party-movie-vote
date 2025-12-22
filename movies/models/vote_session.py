@@ -12,6 +12,12 @@ class VoteSession(models.Model):
                               related_name="vote_sessions")
     movies = ManyToManyField(Movie, related_name="vote_sessions")
     movie_session = OneToOneField(MovieSession,
-                                  related_name="vote_sessions",
+                                  related_name="vote_session",
                                   on_delete=SET_NULL, null=True)
     event_date_time = models.DateTimeField()
+
+    class Meta:
+        ordering = ["-event_date_time"]
+
+    def __str__(self):
+        return f"{self.name} at {self.event_date_time.strftime("%d-%m-%Y, %H:%M")}"
