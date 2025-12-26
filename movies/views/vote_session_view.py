@@ -91,7 +91,7 @@ class AddMovieToVoteSessionView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
 
-@login_required
+@login_required(login_url="login")
 def vote_session_join(request, pk):
     if request.method != "POST":
         return HttpResponseForbidden()
@@ -174,7 +174,7 @@ class VoteSessionCreateView(LoginRequiredMixin, generic.CreateView):
         return response
 
 
-@login_required
+@login_required(login_url="login")
 def vote_session_leave(request, pk):
     if request.method != "POST":
         return HttpResponseForbidden()
@@ -198,13 +198,13 @@ def vote_session_leave(request, pk):
     )
 
 
-@login_required
+@login_required(login_url="login")
 def movie_vote(request, pk_v, pk_m):
     if request.method != "POST":
         return HttpResponseForbidden()
     vote_session = get_object_or_404(VoteSession, pk=pk_v)
     movie = get_object_or_404(Movie, pk=pk_m)
-    Vote.objects.create(user=request.user, movie=movie,
+    Vote.objects.get_or_create(user=request.user, movie=movie,
                         vote_session=vote_session)
     return redirect("movies:vote-session-detail", pk=vote_session.pk)
 
