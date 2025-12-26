@@ -14,18 +14,21 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
     model = get_user_model()
     template_name = "movies/user/user_detail.html"
 
+    def get_object(self):
+        return self.request.user
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["active_events"] = VoteSession.objects.filter(
-            event_date_time__gt=timezone.now())
+            event_date_time__gt=timezone.now()
+        )
         return context
 
 
 def index(request):
     if request.user.is_authenticated:
         return redirect(
-            "movies:user-detail",
-            pk=request.user.pk
+            "movies:user-detail"
         )
     return redirect("login")
 

@@ -20,7 +20,7 @@
             <strong>Members:</strong>
             {% if vote_session.members.exists %}
                 {% for member in vote_session.members.all %}
-                    <a href="{% url 'movies:user-detail' pk=member.id %}">{{ member }}</a>{% if not forloop.last %}, {% endif %}
+                    {{ member }}{% if not forloop.last %}, {% endif %}
                 {% endfor %}
             {% else %}
                 No members for now

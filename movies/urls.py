@@ -53,7 +53,7 @@ urlpatterns = [
     path("votesessions/<int:pk>/",
          VoteSessionDetailView.as_view(),
          name="vote-session-detail"),
-    path("user/<int:pk>/",
+    path("profile/",
          UserDetailView.as_view(),
          name="user-detail"),
     path("", views.user_view.index, name="index"),

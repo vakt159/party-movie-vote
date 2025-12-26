@@ -6,7 +6,7 @@
     {% if user.is_authenticated %}
       <li class="list-group-item">
         <div class="fw-semibold">User</div>
-        <a href="{% url 'movies:user-detail' pk=user.id %}">
+        <a href="{% url 'movies:user-detail' %}">
           {{ user.get_username }}
         </a>
       </li>
