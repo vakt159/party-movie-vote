@@ -20,4 +20,4 @@ class VoteSession(models.Model):
         ordering = ["-event_date_time"]
 
     def __str__(self):
-        return f"{self.name} at {self.event_date_time.strftime("%d-%m-%Y, %H:%M")}"
+        return f"{self.name} at {self.event_date_time.strftime('%d-%m-%Y, %H:%M')}"
