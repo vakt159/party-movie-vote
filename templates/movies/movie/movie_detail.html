@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>{{ movie.name }}</h2>
+  <a href="{% url 'movies:add-movie-to-vote-session' pk=movie.id %}" class="btn btn-primary">Add to Vote Session</a>
+</div>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title">Director: {{ movie.director }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Released: {{ movie.release_year }}</h6>
+    <p class="card-text">{{ movie.description }}</p>
+  </div>
+</div>
+
+<h3>Comments</h3>
+{% for comment in comments %}
+  <div class="card mb-2">
+    <div class="card-body d-flex justify-content-between align-items-start">
+      <div>
+        <h6 class="card-subtitle mb-1 text-muted">{{ comment.user }}</h6>
+        <p class="card-text">{{ comment.text }}</p>
+      </div>
+      {% if comment.user.id == user.id %}
+        <div class="btn-group-vertical">
+          <a href="{% url 'movies:comment-update' pk=comment.id %}" class="btn btn-sm btn-secondary">✏️ Edit</a>
+          <a href="{% url 'movies:comment-delete' pk=comment.id %}" class="btn btn-sm btn-danger">🗑 Delete</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% empty %}
+  <p>No comments yet. Be the first to leave one!</p>
+{% endfor %}
+
+<h3 id="comment-form-title" class="mt-4">
+  {% if comment.id %}Edit Comment{% else %}Leave a Comment{% endif %}
+</h3>
+
+<form action="{% if comment.id %}{% url 'movies:comment-update' pk=comment.id %}{% else %}{% url 'movies:comment-create' pk=movie.id %}{% endif %}"
+      method="post" novalidate>
+  {% csrf_token %}
+  {{ form|crispy }}
+  <div class="d-flex gap-2 mt-2">
+    <input type="submit"
+           value="{% if comment.id %}Save Changes{% else %}Submit{% endif %}"
+           class="btn btn-primary">
+    {% if comment.id %}
+      <a href="{% url 'movies:movie-detail' pk=movie.id %}" class="btn btn-secondary">Cancel</a>
+    {% endif %}
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container my-4">
+
+  <!-- Vote Session Info -->
+  <div class="mb-4">
+    <h2 class="mb-2">{{ movie_session.name }}</h2>
+    <p class="text-muted">
+      <i class="bi bi-calendar-event"></i> <!-- optional Bootstrap icon -->
+      {{ movie_session.event_date_time|date:"F j, Y, H:i" }}
+    </p>
+    <hr>
+  </div>
+
+  <!-- Winner Section -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h4 class="card-title">🏆 Winner Movie</h4>
+      {% if winner %}
+        <h5 class="mt-2">{{ winner.name }}</h5>
+        {% if winner.director %}
+          <p class="mb-1"><strong>Director:</strong> {{ winner.director }}</p>
+        {% endif %}
+        {% if winner.release_year %}
+          <p class="mb-1"><strong>Release Year:</strong> {{ winner.release_year }}</p>
+        {% endif %}
+        {% if winner.description %}
+          <p class="mt-2">{{ winner.description }}</p>
+        {% endif %}
+      {% else %}
+        <p class="text-muted">No winner selected yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="mb-3">
+                Search Movies
+                <span class="htmx-indicator text-muted fst-italic ms-2">
+                    Searching...
+                </span>
+            </h3>
+
+            <input class="form-control form-control-lg"
+                   type="search"
+                   name="search"
+                   placeholder="Search movies..."
+                   hx-get="{% url 'movies:movie-list-partial' %}"
+                   hx-trigger="input changed delay:500ms"
+                   hx-target="#search-results"
+                   hx-indicator=".htmx-indicator">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive shadow-sm">
+                <table class="table table-striped table-bordered text-center align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Director</th>
+                            <th>Released</th>
+                            <th>Description</th>
+                            <th>URL</th>
+                        </tr>
+                    </thead>
+                    <tbody id="search-results">
+                        {% include "movies/movie/partial/movie_list_partial.html" %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
